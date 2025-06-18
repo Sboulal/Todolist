@@ -1,0 +1,58 @@
+<div class="todo-item" [class.completed]="todo.completed">
+    <div *ngIf="!isEditing" class="todo-content">
+      <div class="todo-checkbox">
+        <input 
+          type="checkbox" 
+          [checked]="todo.completed"
+          (change)="onToggleComplete()"
+          id="todo-{{todo.id}}">
+        <label for="todo-{{todo.id}}"></label>
+      </div>
+      
+      <div class="todo-details">
+        <h4 class="todo-title" [class.completed-text]="todo.completed">
+          {{todo.title}}
+        </h4>
+        <p class="todo-description" *ngIf="todo.description">
+          {{todo.description}}
+        </p>
+        <small class="todo-date">
+          Created: {{todo.createdAt | date:'medium'}}
+        </small>
+      </div>
+      
+      <div class="todo-actions">
+        <button class="btn btn-edit" (click)="startEdit()" [disabled]="todo.completed">
+          Edit
+        </button>
+        <button class="btn btn-delete" (click)="onDelete()">
+          Delete
+        </button>
+      </div>
+    </div>
+    
+    <div *ngIf="isEditing" class="todo-edit">
+      <div class="form-group">
+        <input 
+          type="text" 
+          [(ngModel)]="editTitle"
+          placeholder="Todo title..."
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <textarea 
+          [(ngModel)]="editDescription"
+          placeholder="Description..."
+          rows="2"
+          class="form-control"></textarea>
+      </div>
+      <div class="edit-actions">
+        <button class="btn btn-save" (click)="saveEdit()" [disabled]="!editTitle.trim()">
+          Save
+        </button>
+        <button class="btn btn-cancel" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>

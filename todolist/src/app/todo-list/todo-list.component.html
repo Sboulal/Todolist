@@ -1,0 +1,42 @@
+<div class="todo-list-container">
+    <div class="todo-stats">
+      <span class="stat">Total: {{filteredTodos.length}}</span>
+      <span class="stat">Pending: {{pendingCount}}</span>
+      <span class="stat">Completed: {{completedCount}}</span>
+    </div>
+  
+    <div class="todo-filters">
+      <button 
+        class="filter-btn" 
+        [class.active]="filter === 'all'"
+        (click)="setFilter('all')">
+        All
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="filter === 'active'"
+        (click)="setFilter('active')">
+        Active
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="filter === 'completed'"
+        (click)="setFilter('completed')">
+        Completed
+      </button>
+    </div>
+  
+    <div class="todos-container">
+      <div *ngIf="filteredTodos.length === 0" class="no-todos">
+        <p>{{getEmptyMessage()}}</p>
+      </div>
+      
+      <app-todo-item
+        *ngFor="let todo of filteredTodos; trackBy: trackByTodoId"
+        [todo]="todo"
+        (toggleComplete)="onToggleComplete($event)"
+        (delete)="onDelete($event)"
+        (update)="onUpdate($event)">
+      </app-todo-item>
+    </div>
+  </div>
